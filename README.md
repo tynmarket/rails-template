@@ -10,4 +10,8 @@ bundle install
 
 bundle exec rails new . --database=mysql --skip-action-mailbox --skip-action-text --skip-action-cable --skip-sprockets --skip-javascript --skip-hotwire --skip-jbuilder --skip-bundle
 bundle install
+
+docker-compose build
+docker-compose run --rm web bundle install
+docker-compose up
 ```

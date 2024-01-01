@@ -1,0 +1,29 @@
+version: "3"
+services:
+  web:
+    build: .
+    depends_on:
+      - db
+    env_file:
+      .env.dev
+    ports:
+      - 3000:3000
+    stdin_open: true
+    tty: true
+    volumes:
+      - bundle:/usr/local/bundle
+      - node_modules:/app/node_modules
+  db:
+    image: mysql:8.0
+    # command: --default-authentication-plugin=mysql_native_password
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - 3307:3306
+    volumes:
+      - mysql:/var/lib/mysql
+
+volumes:
+  bundle:
+  mysql:
+  node_modules:
