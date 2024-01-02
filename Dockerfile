@@ -18,5 +18,6 @@ RUN bundle install
 # Copy application code
 COPY . .
 
-# Start the server by default, this can be overwritten at runtime
-CMD ["bundle", "exec", "rails", "server", "-b", "0.0.0.0"]
+# Nginxなしの場合
+# CMD ["bundle", "exec", "rails", "server", "-b", "0.0.0.0"]
+CMD ["bundle", "exec", "puma"]
