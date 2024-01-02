@@ -50,6 +50,7 @@ test:
 #
 production:
   <<: *default
-  database: rails_template_production
-  username: rails_template
-  password: <%= ENV["RAILS_TEMPLATE_DATABASE_PASSWORD"] %>
+  database: <%= ENV["MYSQL_DATABASE"] %>
+  username: <%= ENV["DATABSE_USERNAME"] %>
+  password: <%= ENV["DATABSE_PASSWORD"] %>
+  host: <%= ENV["DATABSE_HOST"] %>
