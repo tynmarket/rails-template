@@ -1,4 +1,5 @@
 name: "CI and Deploy to ECS"
+on:
   push:
     branches:
       - master
