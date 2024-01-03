@@ -18,18 +18,18 @@ jobs:
     permissions:
       id-token: write
       contents: read
-    services:
-      mysql:
-        # image: mysql:8.0
-        image: bitnami/mysql:8.0
-        env:
-          # MYSQL_ALLOW_EMPTY_PASSWORD: yes
-          ALLOW_EMPTY_PASSWORD: yes
-          MYSQL_AUTHENTICATION_PLUGIN: mysql_native_password
-          TZ: Asia/Tokyo
-        ports:
-          - 3306:3306
-        options: --health-cmd "mysqladmin ping -h 127.0.0.1" --health-interval 20s --health-timeout 10s --health-retries 10
+#     services:
+#       mysql:
+#         # image: mysql:8.0
+#         image: bitnami/mysql:8.0
+#         env:
+#           # MYSQL_ALLOW_EMPTY_PASSWORD: yes
+#           ALLOW_EMPTY_PASSWORD: yes
+#           MYSQL_AUTHENTICATION_PLUGIN: mysql_native_password
+#           TZ: Asia/Tokyo
+#         ports:
+#           - 3306:3306
+#         options: --health-cmd "mysqladmin ping -h 127.0.0.1" --health-interval 20s --health-timeout 10s --health-retries 10
     env:
       RAILS_ENV: test
       TZ: Asia/Tokyo
@@ -41,11 +41,11 @@ jobs:
         with:
           ruby-version: "3.2"
           bundler-cache: true
-      - name: Set up database schema
-        run: |
-          cp config/database.yml.ci config/database.yml
-          bundle exec rails db:create
-          bundle exec rails db:schema:load
+#       - name: Set up database schema
+#         run: |
+#           cp config/database.yml.ci config/database.yml
+#           bundle exec rails db:create
+#           bundle exec rails db:schema:load
       - name: Set up AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
