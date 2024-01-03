@@ -1,0 +1,64 @@
+# This workflow uses actions that are not certified by GitHub.  They are
+# provided by a third-party and are governed by separate terms of service,
+# privacy policy, and support documentation.
+#
+# This workflow will install a prebuilt Ruby version, install dependencies, and
+# run tests and linters.
+name: "Ruby on Rails CI"
+on:
+  pull_request:
+    types: [opened, synchronize]
+  workflow_call:
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref == 'refs/heads/master' && github.sha || github.ref  }}
+  cancel-in-progress: true
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+#     services:
+#       mysql:
+#         # image: mysql:8.0
+#         image: bitnami/mysql:8.0
+#         env:
+#           # MYSQL_ALLOW_EMPTY_PASSWORD: yes
+#           ALLOW_EMPTY_PASSWORD: yes
+#           MYSQL_AUTHENTICATION_PLUGIN: mysql_native_password
+#           TZ: Asia/Tokyo
+#         ports:
+#           - 3306:3306
+#         options: --health-cmd "mysqladmin ping -h 127.0.0.1" --health-interval 20s --health-timeout 10s --health-retries 10
+    env:
+      RAILS_ENV: test
+      TZ: Asia/Tokyo
+      AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Install Ruby and gems
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.2"
+          bundler-cache: true
+#       - name: Set up database schema
+#         run: |
+#           cp config/database.yml.ci config/database.yml
+#           bundle exec rails db:create
+#           bundle exec rails db:schema:load
+#       - name: Install Node and packages
+#         uses: actions/setup-node@v3
+#         with:
+#           node-version-file: '.node-version'
+#           cache: npm
+#       - name: npm ci
+#         run: npm ci
+#       - name: npm run lint
+#         run: npm run lint
+#       - name: npm run build
+#         run: npm run build
+#       - name: Run rubocop
+#         run: bundle exec rubocop --parallel
+#       - name: Run RSpec
+#         run: bundle exec rspec
