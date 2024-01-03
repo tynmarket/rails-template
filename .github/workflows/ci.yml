@@ -33,6 +33,7 @@ jobs:
     env:
       RAILS_ENV: test
       TZ: Asia/Tokyo
+      AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -62,6 +63,19 @@ jobs:
         run: |
           docker build -f Dockerfile.prod -t $REGISTRY/$REPOSITORY:$IMAGE_TAG .
           docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
+
+      - name: Checkout ecspresso
+        uses: kayac/ecspresso@v2
+        with:
+          version: latest
+
+      - name: ecspresso diff
+        run: |
+          ecspresso diff
+
+      - name: ecspresso deploy
+        run: |
+          ecspresso deploy
 #       - name: Install Node and packages
 #         uses: actions/setup-node@v3
 #         with:

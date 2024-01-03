@@ -17,7 +17,7 @@
         },
         {
           "name": "RAILS_MASTER_KEY",
-          "value": "{{ must_env `RAILS_MASTER_KEY_RAILS_TEMPLATE` }}"
+          "value": "{{ ssm `/rails-template/rails_master_key` }}"
         },
         {
           "name": "DB_HOST",
@@ -79,7 +79,7 @@
     "FARGATE"
   ],
   "runtimePlatform": {
-    "cpuArchitecture": "ARM64",
+    "cpuArchitecture": "X86_64",
     "operatingSystemFamily": "LINUX"
   }
 }
